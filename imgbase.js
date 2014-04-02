@@ -3,19 +3,6 @@ var fs = require('fs')
   , imageinfo = require('imageinfo')
   , reString = 'url\\(\\s*([\'"]|\\b)(.+?)\\1\\s*\\)'
   ;
-//  , mimes = {
-//      png:  'image/png'
-//    , gif:  'image/gif'
-//    , jpeg: 'image/jpeg'
-//    , jpg:  'image/jpeg'
-//    , ttf:  'font/ttf'
-//    , svg:  'image/svg+xml'
-//  }
-//  , types = []
-//  ;
-//for (var i in mimes) {
-//  types.push(i);
-//}
 
 function getBase64 (url, fn, opt) {
   var m = /^(https?):\/\/([^:\/]+)(?::(\d+))?([^:]*)$/.exec(url);
@@ -62,14 +49,11 @@ function compileStream (sIn, sOut, opt) {
           parse(index + len);
         }, opt);
       } else {
-        buf = buf.slice(start);
+        sOut.write(buf.slice(start));
         sIn.resume();
       }
     }
     parse(0);
-  });
-  sIn.on('end', function () {
-    sOut.write(buf);
   });
 }
 
